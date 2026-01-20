@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Bookstore</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.location.href='index.html'">📚 Bookstore</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="cart-badge">
+                        <a href="cart.html">🛒 Cart</a>
+                        <span class="badge" style="display: none;">0</span>
+                    </li>
+                    <li><a href="#" id="authLink">Account</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Page Title -->
+    <section class="hero" style="padding: 2rem 0;">
+        <div class="container">
+            <h1 style="font-size: 2.5rem;">🛒 Shopping Cart</h1>
+        </div>
+    </section>
+
+    <!-- Cart Content -->
+    <section class="container">
+        <div style="display: grid; grid-template-columns: 1fr 400px; gap: 2rem; align-items: start;">
+            <!-- Cart Items -->
+            <div id="cartItems">
+                <!-- Cart items will be loaded here -->
+            </div>
+
+            <!-- Cart Summary -->
+            <div id="cartSummary">
+                <!-- Cart summary will be loaded here -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="static/js/api.js"></script>
+    <script src="static/js/auth.js"></script>
+    <script src="static/js/cart.js"></script>
+
+    <script>
+        // Update auth link
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('authLink');
+            const customer = auth.getCustomer();
+
+            if (customer) {
+                authLink.textContent = `👤 ${customer.username}`;
+                authLink.href = '#';
+                authLink.onclick = (e) => {
+                    e.preventDefault();
+                    if (confirm('Logout?')) {
+                        auth.logout();
+                    }
+                };
+            } else {
+                authLink.textContent = 'Login';
+                authLink.href = 'login.html';
+            }
+        });
+
+        // Make responsive on mobile
+        window.addEventListener('resize', () => {
+            const cartContainer = document.querySelector('.container > div');
+            if (window.innerWidth < 768) {
+                cartContainer.style.gridTemplateColumns = '1fr';
+            } else {
+                cartContainer.style.gridTemplateColumns = '1fr 400px';
+            }
+        });
+    </script>
+</body>
+
+</html>

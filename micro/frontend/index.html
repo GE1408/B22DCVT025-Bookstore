@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bookstore - Browse Our Collection</title>
+    <link rel="stylesheet" href="static/css/style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <!-- Animated Background -->
+    <div class="animated-bg"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo" onclick="window.location.href='index.html'">B22DCVT025 Bookstore</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">Home</a></li>
+                    <li class="cart-badge">
+                        <a href="cart.html">🛒 Cart</a>
+                        <span class="badge" style="display: none;">0</span>
+                    </li>
+                    <li><a href="login.html" id="authLink">Login</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="container">
+            <h1>Discover Your Next Great Read</h1>
+            <p>Explore thousands of books across all genres</p>
+        </div>
+    </section>
+
+    <!-- Search and Filter -->
+    <section class="container">
+        <div class="search-filter">
+            <div class="search-box">
+                <input type="text" id="searchInput" placeholder="🔍 Search books by title, author, or category...">
+            </div>
+            <div class="filter-buttons">
+                <button class="filter-btn active" onclick="filterByCategory('all')">All</button>
+                <button class="filter-btn" onclick="filterByCategory('Programming')">Programming</button>
+                <button class="filter-btn" onclick="filterByCategory('Python')">Python</button>
+                <button class="filter-btn" onclick="filterByCategory('JavaScript')">JavaScript</button>
+                <button class="filter-btn" onclick="filterByCategory('Computer Science')">Computer Science</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Books Grid -->
+    <section class="container">
+        <div class="books-grid" id="booksGrid">
+            <!-- Books will be loaded here by JavaScript -->
+        </div>
+    </section>
+
+    <!-- Scripts -->
+    <script src="static/js/api.js"></script>
+    <script src="static/js/auth.js"></script>
+    <script src="static/js/books.js"></script>
+
+    <script>
+        // Update auth link based on login status
+        document.addEventListener('DOMContentLoaded', () => {
+            const authLink = document.getElementById('authLink');
+            const customer = auth.getCustomer();
+
+            if (customer) {
+                authLink.textContent = `👤 ${customer.username}`;
+                authLink.href = '#';
+                authLink.onclick = (e) => {
+                    e.preventDefault();
+                    if (confirm('Logout?')) {
+                        auth.logout();
+                    }
+                };
+            }
+        });
+    </script>
+</body>
+
+</html>
